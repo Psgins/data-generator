@@ -12,7 +12,7 @@ interface IncomerOrderOptionProps {
 }
 
 const IncomerOrderOption: FC<IncomerOrderOptionProps> = ({ nodeId }) => {
-    const [orders, dispatch] = useIncomerOrder();
+    const [orders, orderDispatch] = useIncomerOrder();
     const [dragging, setDragging] = useState<string>();
 
     const incomers = useMemo(() => {
@@ -39,9 +39,9 @@ const IncomerOrderOption: FC<IncomerOrderOptionProps> = ({ nodeId }) => {
                 return incomer;
             });
 
-            dispatch(changeOrder(nodeId, newList));
+            orderDispatch(changeOrder(nodeId, newList));
         },
-        [dragging, incomers, dispatch]
+        [dragging, incomers, orderDispatch]
     );
 
     const handleOnDragEnd = useCallback(() => {

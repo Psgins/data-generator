@@ -11,6 +11,7 @@ export const TERMINAL_NODE: Node<undefined> = {
     position: { x: 0, y: 0 },
     type: NodeType.TERMINAL,
     data: undefined,
+    deletable: false,
 };
 
 export const TERMINAL_NODE_OPTION: NodeOption<void> = {

@@ -9,6 +9,7 @@ type Options = NodeOption<any>[];
 enum OptionActionType {
     ADD,
     CHANGE,
+    DELETE,
 }
 
 interface OptionAction {
@@ -30,6 +31,11 @@ export const changeOption = (option: NodeOption<any>): OptionAction => ({
     payload: option,
 });
 
+export const deleteOption = (ids: string[]): OptionAction => ({
+    type: OptionActionType.DELETE,
+    payload: ids,
+});
+
 // --- reducer ---
 
 const optionReducer: Reducer<Options, OptionAction> = (options, action) => {
@@ -38,6 +44,8 @@ const optionReducer: Reducer<Options, OptionAction> = (options, action) => {
             return [...options, action.payload];
         case OptionActionType.CHANGE:
             return options.map((option) => (option.id === action.payload.id ? action.payload : option));
+        case OptionActionType.DELETE:
+            return options.filter((option) => !(action.payload as string[]).includes(option.id));
         default:
             return options;
     }

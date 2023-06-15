@@ -1,12 +1,15 @@
+import { omit } from "lodash";
 import { TERMINAL_NODE_ID } from "@/util/generator";
 import { Reducer, createContext, useReducer, PropsWithChildren, FC, Dispatch, useContext } from "react";
+import { Edge } from "reactflow";
 
 type Orders = Record<string, string[]>;
 
 enum OrderActionType {
     REGISTER,
-    ADD,
     CHANGE,
+    DELETE_FROM_NODE,
+    DELETE_NODE,
 }
 
 interface OrderAction {
@@ -22,15 +25,19 @@ const reducer: Reducer<Orders, OrderAction> = (orders, action) => {
     switch (action.type) {
         case OrderActionType.REGISTER:
             return { ...orders, [action.payload.id]: [] };
-        case OrderActionType.ADD: {
-            const { target, source } = action.payload;
-            const targetOrder = orders[target];
-            if (!targetOrder) throw Error("target has not been registered");
-            return { ...orders, [target]: [...targetOrder, source] };
-        }
         case OrderActionType.CHANGE: {
             const { id, orders: newOrders } = action.payload;
             return { ...orders, [id]: newOrders };
+        }
+        case OrderActionType.DELETE_FROM_NODE: {
+            const updatedOrders = (action.payload as Edge[]).reduce((collection, { source, target }) => {
+                const order = orders[target];
+                return { ...collection, [target]: order.filter((id) => id !== source) };
+            }, {});
+            return { ...orders, ...updatedOrders };
+        }
+        case OrderActionType.DELETE_NODE: {
+            return omit(orders, action.payload as string[]);
         }
         default:
             return initialOrders;
@@ -44,14 +51,19 @@ export const registerOrder = (id: string): OrderAction => ({
     payload: { id },
 });
 
-export const AddOrder = (source: string, target: string): OrderAction => ({
-    type: OrderActionType.ADD,
-    payload: { source, target },
-});
-
 export const changeOrder = (id: string, orders: string[]): OrderAction => ({
     type: OrderActionType.CHANGE,
     payload: { id, orders },
+});
+
+export const deleteNodeOrder = (ids: string[]): OrderAction => ({
+    type: OrderActionType.DELETE_NODE,
+    payload: ids,
+});
+
+export const deleteOrderFromNode = (edges: Edge[]): OrderAction => ({
+    type: OrderActionType.DELETE_FROM_NODE,
+    payload: edges,
 });
 
 // --- context ---

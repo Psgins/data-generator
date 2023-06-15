@@ -1,13 +1,14 @@
+import { FC, useMemo, useCallback } from "react";
+import { Node } from "reactflow";
 import FixedValueSetting from "@/components/options/FixedValueSetting";
 import RandomNumberSetting from "@/components/options/RandomNumberSetting";
 import { NodeOption, NodeType } from "@/types/generator";
-import { FC, useMemo, useCallback } from "react";
 import useOption, { changeOption } from "../_hooks/useOptions";
 import PaddingSetting from "@/components/options/PaddingSetting";
 
 interface NodeOptionDecisionProps {
     id: string;
-    nodeType: NodeType;
+    nodeType: Node["type"];
 }
 
 const OptionNotFound: FC = () => {

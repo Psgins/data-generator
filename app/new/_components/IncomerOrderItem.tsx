@@ -1,4 +1,4 @@
-import { DragEventHandler, FC, MouseEventHandler, DragEvent, useRef, RefObject, useCallback } from "react";
+import { DragEventHandler, FC, DragEvent, useCallback } from "react";
 import { Box, Grid, styled } from "@mui/material";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
@@ -10,6 +10,7 @@ const DragableBox = styled(Box, { shouldForwardProp: (prop) => prop !== "draggin
     "&": {
         display: "flex",
         cursor: "grab",
+        alignItems: "center",
     },
     "& > *": {
         opacity: 1,
@@ -28,7 +29,7 @@ interface IncomerOrderItemProps {
     onDragEnd: () => void;
 }
 
-const IncomerOrderItem: FC<IncomerOrderItemProps> = ({ id, dragging, onDragStart, onDragOver, onDragEnd }) => {
+const IncomerOrderItem: FC<IncomerOrderItemProps> = ({ id, onDragStart, onDragOver, onDragEnd }) => {
     const handleOnDragStart: DragEventHandler = useCallback(
         (event: DragEvent<HTMLDivElement>) => {
             event.dataTransfer.effectAllowed = "move";
@@ -51,16 +52,8 @@ const IncomerOrderItem: FC<IncomerOrderItemProps> = ({ id, dragging, onDragStart
 
     return (
         <Grid item xs={12}>
-            <DragableBox
-                draggable
-                sx={{ display: "flex", opacity: dragging ? 0.2 : 1, cursor: "grab" }}
-                onDragStart={handleOnDragStart}
-                onDragOver={handleOnDragOver}
-                onDragEnd={handleOnDragEnd}
-            >
-                <Box>
-                    <DragIndicatorIcon />
-                </Box>
+            <DragableBox draggable onDragStart={handleOnDragStart} onDragOver={handleOnDragOver} onDragEnd={handleOnDragEnd}>
+                <DragIndicatorIcon />
                 <Box sx={{ flexGrow: 1, textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{id}</Box>
             </DragableBox>
         </Grid>
