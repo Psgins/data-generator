@@ -1,33 +1,24 @@
 import { Edge, Node } from "reactflow";
-import { TERMINAL_NODE } from "./constants";
-import { NodeOption, Supplier } from "@/types/generator";
-import { createSupplyChian } from "./suppliers";
+import { NodeOption } from "@/types/generator";
+import { createSupplyChain } from "./suppliers";
 import { Info } from "@/app/new/_hooks/useInfo";
+import { createGlobalStore, createLocalStore } from "./store";
 
 export * from "./constants";
 export * from "./suppliers";
 
 export const generate = (info: Info, nodes: Node[], edges: Edge[], options: NodeOption<any>[], orders: Record<string, string[]>) => {
-    const terminal = nodes.find((node) => node.id === TERMINAL_NODE.id);
+    const supplyChain = createSupplyChain(nodes, edges, options, orders);
 
-    if (!terminal) throw new Error("cannot find terminal node");
-
-    const supplyChain = createSupplyChian(terminal, { edges, nodes, options, orders });
-
-    const content = generateFileContent(info, supplyChain);
-
-    console.log(content);
-};
-
-const generateFileContent = (info: Info, supplyChain: Supplier) => {
     const content: string[] = [];
-    const store = {};
-
     const iteration = parseInt(info.iteration, 10);
 
+    const global = createGlobalStore(nodes, options);
+
     for (let i = 0; i < iteration; i++) {
-        content.push(supplyChain(store));
+        const local = createLocalStore(nodes, options, global);
+        content.push(supplyChain(global, local));
     }
 
-    return content.join("\n");
+    console.log(content.join("\n"));
 };

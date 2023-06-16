@@ -72,6 +72,7 @@ export const createNodeInfo = (nodeType: NodeType, position: XYPosition): [Node<
                 nodeType,
                 data: {
                     isMemory: false,
+                    allowNumber: [true, true, true, true, true, true, true, true, true, true],
                 },
             };
             return [node, option];

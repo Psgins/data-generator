@@ -1,6 +1,6 @@
 import { NodeOption } from "@/types/generator";
 import { PaddingOption } from "@/types/generator/nodeOption";
-import { TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { ChangeEvent, FC, useCallback } from "react";
 
 interface PaddingSettingProps {
@@ -37,10 +37,14 @@ const PaddingSetting: FC<PaddingSettingProps> = ({ option, onChange }) => {
     );
 
     return (
-        <>
-            <TextField fullWidth label="Padding with" size="small" variant="outlined" value={option.data.padChar} onChange={handleOnPadCharChange} />
-            <TextField fullWidth label="Padding Number" size="small" variant="outlined" value={option.data.length} onChange={handleOnLengthChange} />
-        </>
+        <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <TextField fullWidth label="with" size="small" variant="outlined" value={option.data.padChar} onChange={handleOnPadCharChange} />
+            </Grid>
+            <Grid item xs={12}>
+                <TextField fullWidth label="length" size="small" variant="outlined" value={option.data.length} onChange={handleOnLengthChange} />
+            </Grid>
+        </Grid>
     );
 };
 

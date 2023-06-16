@@ -15,12 +15,12 @@ import {
     NodeProps,
     useNodesState,
     useEdgesState,
+    BackgroundVariant,
 } from "reactflow";
 import { NodeType } from "@/types/generator";
 import { TERMINAL_NODE, createNodeInfo } from "@/util/generator";
 import SettingPanel from "./_components/SettingPanel";
 import WidgetsPanel from "./_components/WidgetsPanel";
-import ControllerPanel from "./_components/ControllerPanel";
 import FixedValueNodeType from "@/components/node_type/FixedValueNodeType";
 import TerminalNodeType from "@/components/node_type/TerminalNodeType";
 import useIncomerOrder, { registerOrder, changeOrder, deleteNodeOrder, deleteOrderFromNode } from "./_hooks/useIncomerOrder";
@@ -40,6 +40,7 @@ const customNodeType: Record<string, ComponentType<NodeProps>> = {
 const Container = styled(Box)(() => ({
     "&": {
         height: "calc(100vh - 68.5px)",
+        backgroundColor: "#35363A",
     },
 }));
 
@@ -116,10 +117,11 @@ const Workspace: FC = () => {
     const handleOnNodesDelete = useCallback(
         (nodes: Node[]) => {
             const ids = nodes.map((node) => node.id);
+            setSelectedNodeId(undefined);
             orderDispatch(deleteNodeOrder(ids));
             optionDispatch(deleteOption(ids));
         },
-        [optionDispatch]
+        [optionDispatch, orderDispatch, setSelectedNodeId]
     );
 
     const handleOnEdgesDelete = useCallback(
@@ -150,9 +152,8 @@ const Workspace: FC = () => {
                 onEdgesDelete={handleOnEdgesDelete}
             >
                 <WidgetsPanel />
-                {/* <ControllerPanel /> */}
                 <SettingPanel id={selectedNodeId} onClose={handleOnPanelClose} />
-                <Background />
+                <Background variant={BackgroundVariant.Dots} />
                 <Controls />
             </ReactFlow>
         </Container>

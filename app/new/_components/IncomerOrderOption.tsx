@@ -1,5 +1,5 @@
 import { FC, useMemo, useState, useCallback } from "react";
-import { Grid, styled } from "@mui/material";
+import { Chip, Divider, Grid, styled } from "@mui/material";
 import useIncomerOrder, { changeOrder } from "../_hooks/useIncomerOrder";
 import IncomerOrderItem from "./IncomerOrderItem";
 
@@ -48,20 +48,25 @@ const IncomerOrderOption: FC<IncomerOrderOptionProps> = ({ nodeId }) => {
         setDragging(undefined);
     }, [setDragging]);
 
-    return (
-        <ReorderableGrid container>
-            {incomers.map((incomer) => (
-                <IncomerOrderItem
-                    key={incomer}
-                    dragging={dragging === incomer}
-                    id={incomer}
-                    onDragStart={handleOnDragStart}
-                    onDragOver={handleOnDragOver}
-                    onDragEnd={handleOnDragEnd}
-                />
-            ))}
-        </ReorderableGrid>
-    );
+    return incomers.length > 0 ? (
+        <>
+            <Divider variant="middle">
+                <Chip size="small" label="ORDER" />
+            </Divider>
+            <Grid container sx={{ pl: 0.25, pr: 0.5, py: 0.5 }}>
+                {incomers.map((incomer) => (
+                    <IncomerOrderItem
+                        key={incomer}
+                        dragging={dragging === incomer}
+                        id={incomer}
+                        onDragStart={handleOnDragStart}
+                        onDragOver={handleOnDragOver}
+                        onDragEnd={handleOnDragEnd}
+                    />
+                ))}
+            </Grid>
+        </>
+    ) : null;
 };
 
 export default IncomerOrderOption;

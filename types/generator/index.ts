@@ -8,7 +8,6 @@ export enum NodeType {
     FIXED_VALUE = "FIXED_VALUE",
     RANDOM_NUMBER = "RANDOM_NUMBER",
     PADDING = "PADDING",
-    UNKNOWN = "UNKNOWN",
 }
 
 export interface GlobalInfomation {
@@ -25,4 +24,4 @@ export interface NodeOption<T> {
     data: T;
 }
 
-export type Supplier = (store: Record<string, any>) => string;
+export type Supplier = (store: Record<string, any>) => string | number;

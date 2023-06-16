@@ -1,10 +1,11 @@
-import { FC, useMemo, useCallback } from "react";
+import { FC, useMemo, useCallback, memo } from "react";
 import { Node } from "reactflow";
 import FixedValueSetting from "@/components/options/FixedValueSetting";
 import RandomNumberSetting from "@/components/options/RandomNumberSetting";
 import { NodeOption, NodeType } from "@/types/generator";
 import useOption, { changeOption } from "../_hooks/useOptions";
 import PaddingSetting from "@/components/options/PaddingSetting";
+import { Typography } from "@mui/material";
 
 interface NodeOptionDecisionProps {
     id: string;
@@ -12,7 +13,11 @@ interface NodeOptionDecisionProps {
 }
 
 const OptionNotFound: FC = () => {
-    return <>No Option Available</>;
+    return (
+        <Typography align="center" variant="body2">
+            No option available
+        </Typography>
+    );
 };
 
 const NodeOptionDecision: FC<NodeOptionDecisionProps> = ({ id, nodeType }) => {
@@ -42,4 +47,4 @@ const NodeOptionDecision: FC<NodeOptionDecisionProps> = ({ id, nodeType }) => {
     }
 };
 
-export default NodeOptionDecision;
+export default memo(NodeOptionDecision);

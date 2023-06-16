@@ -16,7 +16,7 @@ const FixedInputOption: FC<FixedInputOptionProps> = ({ option, onChange }) => {
         [onChange]
     );
 
-    return <TextField fullWidth label="Fixed Value" size="small" variant="outlined" value={option.data} onChange={handleOnChange} />;
+    return <TextField fullWidth label="value" size="small" variant="outlined" value={option.data} onChange={handleOnChange} />;
 };
 
 export default FixedInputOption;
