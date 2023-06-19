@@ -1,10 +1,19 @@
 import { DragEventHandler, FC } from "react";
-import { Card, styled } from "@mui/material";
+import { Box, Tooltip, styled } from "@mui/material";
 import { NodeType } from "@/types/generator";
+import PlusOneOutlinedIcon from "@mui/icons-material/PlusOneOutlined";
 
-const Root = styled(Card)(() => ({
+const Root = styled(Box)(() => ({
     "&": {
-        padding: "0.5rem",
+        width: "40px",
+        height: "40px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "grab",
+    },
+    "&:hover": {
+        backgroundColor: "rgb(66, 66, 66)",
     },
 }));
 
@@ -14,9 +23,11 @@ const CounterWidget: FC = () => {
     };
 
     return (
-        <Root draggable onDragStart={handleOnDragStart}>
-            Counter
-        </Root>
+        <Tooltip placement="top" title="Counter">
+            <Root draggable onDragStart={handleOnDragStart}>
+                <PlusOneOutlinedIcon />
+            </Root>
+        </Tooltip>
     );
 };
 

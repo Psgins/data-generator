@@ -1,10 +1,19 @@
 import { FC, DragEventHandler } from "react";
-import { Card, styled } from "@mui/material";
+import { Box, Tooltip, styled } from "@mui/material";
 import { NodeType } from "@/types/generator";
+import FontDownloadIcon from "@mui/icons-material/FontDownload";
 
-const Root = styled(Card)(() => ({
+const Root = styled(Box)(() => ({
     "&": {
-        padding: "0.5rem",
+        width: "40px",
+        height: "40px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "grab",
+    },
+    "&:hover": {
+        backgroundColor: "rgb(66, 66, 66)",
     },
 }));
 
@@ -12,11 +21,12 @@ const FixedValueWidget: FC = () => {
     const handleOnDragStart: DragEventHandler<HTMLDivElement> = (event) => {
         event.dataTransfer.setData("create_node", NodeType[NodeType.FIXED_VALUE]);
     };
-
     return (
-        <Root draggable onDragStart={handleOnDragStart}>
-            Fixed Value
-        </Root>
+        <Tooltip placement="top" title="Fixed Value">
+            <Root draggable onDragStart={handleOnDragStart}>
+                <FontDownloadIcon />
+            </Root>
+        </Tooltip>
     );
 };
 

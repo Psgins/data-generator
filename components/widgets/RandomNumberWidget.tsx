@@ -1,10 +1,19 @@
 import { DragEventHandler, FC } from "react";
-import { Card, styled } from "@mui/material";
+import { Box, Tooltip, styled } from "@mui/material";
 import { NodeType } from "@/types/generator";
+import Filter1OutlinedIcon from "@mui/icons-material/Filter1Outlined";
 
-const Root = styled(Card)(() => ({
+const Root = styled(Box)(() => ({
     "&": {
-        padding: "0.5rem",
+        width: "40px",
+        height: "40px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "grab",
+    },
+    "&:hover": {
+        backgroundColor: "rgb(66, 66, 66)",
     },
 }));
 
@@ -14,9 +23,11 @@ const RandomNumberWidget: FC = () => {
     };
 
     return (
-        <Root draggable onDragStart={handleOnDragStart}>
-            Random Number
-        </Root>
+        <Tooltip placement="top" title="Random Number">
+            <Root draggable onDragStart={handleOnDragStart}>
+                <Filter1OutlinedIcon />
+            </Root>
+        </Tooltip>
     );
 };
 

@@ -1,10 +1,19 @@
 import { FC, DragEventHandler } from "react";
-import { Card, styled } from "@mui/material";
+import { Box, Card, Tooltip, styled } from "@mui/material";
 import { NodeType } from "@/types/generator";
+import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
 
-const Root = styled(Card)(() => ({
+const Root = styled(Box)(() => ({
     "&": {
-        padding: "0.5rem",
+        width: "40px",
+        height: "40px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "grab",
+    },
+    "&:hover": {
+        backgroundColor: "rgb(66, 66, 66)",
     },
 }));
 
@@ -14,9 +23,11 @@ const PaddingWidget: FC = () => {
     };
 
     return (
-        <Root draggable onDragStart={handleOnDragStart}>
-            Padding
-        </Root>
+        <Tooltip placement="top" title="Padding">
+            <Root draggable onDragStart={handleOnDragStart}>
+                <AlignHorizontalLeftIcon />
+            </Root>
+        </Tooltip>
     );
 };
 
