@@ -1,14 +1,11 @@
+import { Info } from "@/types/generator";
 import { Dispatch, FC, PropsWithChildren, Reducer, createContext, useContext, useReducer } from "react";
 
 // --- type ---
 
 enum InfoActionType {
+    INIT,
     UPDATE,
-}
-
-export interface Info {
-    name: string;
-    iteration: string;
 }
 
 interface InfoAction {
@@ -16,14 +13,19 @@ interface InfoAction {
     payload: any;
 }
 
-const initValue: Info = {
+export const initialInfo: Info = {
     name: "Untitled",
     iteration: "1",
 };
 
 // --- util function ---
 
-export const infoUpdate = (change: Partial<Info>) => ({
+export const initInfo = (info: Info): InfoAction => ({
+    type: InfoActionType.INIT,
+    payload: info,
+});
+
+export const updateInfo = (change: Partial<Info>): InfoAction => ({
     type: InfoActionType.UPDATE,
     payload: change,
 });
@@ -32,6 +34,8 @@ export const infoUpdate = (change: Partial<Info>) => ({
 
 const reducer: Reducer<Info, InfoAction> = (info, action) => {
     switch (action.type) {
+        case InfoActionType.INIT:
+            return action.payload;
         case InfoActionType.UPDATE:
             return { ...info, ...action.payload };
         default:
@@ -54,7 +58,7 @@ const useInfo = (): [Info, Dispatch<InfoAction>] => {
 // --- provider ---
 
 export const InfoProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [info, dispatch] = useReducer(reducer, initValue);
+    const [info, dispatch] = useReducer(reducer, initialInfo);
     return (
         <InfoContext.Provider value={info}>
             <InfoDispatchContext.Provider value={dispatch}>{children}</InfoDispatchContext.Provider>

@@ -2,6 +2,11 @@ import { Node, Edge } from "reactflow";
 
 import { NodeData } from "./nodeData";
 
+export interface Info {
+    name: string;
+    iteration: string;
+}
+
 export enum NodeType {
     TERMINAL = "TERMINAL",
     COUNTER = "COUNTER",

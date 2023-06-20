@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { Box, Paper, Typography, IconButton, TextField, Grid } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
-import useGeneratorInfo, { infoUpdate } from "../_hooks/useInfo";
+import useGeneratorInfo, { updateInfo } from "../_hooks/useInfo";
 
 const GeneratorSettingPanel: FC = () => {
     const [info, infoDispatch] = useGeneratorInfo();
@@ -9,14 +9,14 @@ const GeneratorSettingPanel: FC = () => {
     const handleOnStringChange = (name: string, lengthLimit: number) => (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         if (value.length <= lengthLimit) {
-            infoDispatch(infoUpdate({ [name]: value }));
+            infoDispatch(updateInfo({ [name]: value }));
         }
     };
 
     const handleOnNumberChange = (name: string, lengthLimit: number) => (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         if (value.length <= lengthLimit && /^\d*$/.test(value)) {
-            infoDispatch(infoUpdate({ [name]: value }));
+            infoDispatch(updateInfo({ [name]: value }));
         }
     };
 

@@ -7,6 +7,7 @@ import { TERMINAL_NODE_OPTION } from "@/util/generator";
 type Options = NodeOption<any>[];
 
 enum OptionActionType {
+    INIT,
     ADD,
     CHANGE,
     DELETE,
@@ -17,9 +18,14 @@ interface OptionAction {
     payload: any;
 }
 
-const initialOption: Options = [TERMINAL_NODE_OPTION];
+export const initialOption: Options = [TERMINAL_NODE_OPTION];
 
 // --- util function
+
+export const initOption = (options: Options): OptionAction => ({
+    type: OptionActionType.INIT,
+    payload: options,
+});
 
 export const addOption = (option: NodeOption<any>): OptionAction => ({
     type: OptionActionType.ADD,
@@ -40,6 +46,8 @@ export const deleteOption = (ids: string[]): OptionAction => ({
 
 const optionReducer: Reducer<Options, OptionAction> = (options, action) => {
     switch (action.type) {
+        case OptionActionType.INIT:
+            return action.payload;
         case OptionActionType.ADD:
             return [...options, action.payload];
         case OptionActionType.CHANGE:

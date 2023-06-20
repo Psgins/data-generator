@@ -1,12 +1,4 @@
-import {
-    AppBar,
-    Box,
-    Button,
-    Container,
-    Menu,
-    Toolbar,
-    Typography,
-} from "@mui/material";
+import { AppBar, Box, Button, Container, Menu, Toolbar, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import HiveIcon from "@mui/icons-material/Hive";
 import DGLoginButton from "./DGLoginButton";
@@ -34,7 +26,7 @@ const DGAppBar = (props: DGAppBarProps) => {
                                 justifyContent: "flex-end",
                             }}
                         >
-                            <Link passHref href="/">
+                            <Link passHref href="/generator">
                                 <Button
                                     sx={{
                                         my: 2,
@@ -42,15 +34,10 @@ const DGAppBar = (props: DGAppBarProps) => {
                                         display: "block",
                                     }}
                                 >
-                                    Home
+                                    Generator
                                 </Button>
                             </Link>
-                            <Button
-                                sx={{ my: 2, color: "white", display: "block" }}
-                            >
-                                Template
-                            </Button>
-                            <Link passHref href="/new">
+                            <Link passHref href="/template">
                                 <Button
                                     sx={{
                                         my: 2,
@@ -58,7 +45,7 @@ const DGAppBar = (props: DGAppBarProps) => {
                                         display: "block",
                                     }}
                                 >
-                                    New
+                                    Template
                                 </Button>
                             </Link>
                         </Box>

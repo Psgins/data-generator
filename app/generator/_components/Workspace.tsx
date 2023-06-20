@@ -1,41 +1,25 @@
-"use client";
-
-import { FC, DragEvent, useState, useCallback, useRef, MouseEvent, ComponentType } from "react";
-import { Box, styled } from "@mui/material";
-import {
-    ReactFlow,
+import { FC, useCallback, useRef, useState, MouseEvent, DragEvent } from "react";
+import ReactFlow, {
     Background,
+    BackgroundVariant,
+    Connection,
     Controls,
+    Edge,
     Node,
     ReactFlowInstance,
     XYPosition,
-    Edge,
     addEdge,
-    Connection,
-    NodeProps,
-    useNodesState,
     useEdgesState,
-    BackgroundVariant,
+    useNodesState,
 } from "reactflow";
+import { Box, styled } from "@mui/material";
 import { NodeType } from "@/types/generator";
-import { TERMINAL_NODE, createNodeInfo } from "@/util/generator";
-import SettingPanel from "./_components/SettingPanel";
-import WidgetsPanel from "./_components/WidgetsPanel";
-import FixedValueNodeType from "@/components/node_type/FixedValueNodeType";
-import TerminalNodeType from "@/components/node_type/TerminalNodeType";
-import useIncomerOrder, { registerOrder, changeOrder, deleteNodeOrder, deleteOrderFromNode } from "./_hooks/useIncomerOrder";
-import useOption, { addOption, deleteOption } from "./_hooks/useOptions";
-import RandomNumberNodeType from "@/components/node_type/RandomNumberNodeType";
-import CounterNodeType from "@/components/node_type/CounterNodeType";
-import PaddingNodeType from "@/components/node_type/PaddingNodeType";
-
-const customNodeType: Record<string, ComponentType<NodeProps>> = {
-    [NodeType.TERMINAL]: TerminalNodeType,
-    [NodeType.COUNTER]: CounterNodeType,
-    [NodeType.FIXED_VALUE]: FixedValueNodeType,
-    [NodeType.RANDOM_NUMBER]: RandomNumberNodeType,
-    [NodeType.PADDING]: PaddingNodeType,
-};
+import { TERMINAL_NODE, createNodeInfo } from "@/util/generator/constants";
+import WidgetsPanel from "./WidgetsPanel";
+import SettingPanel from "./SettingPanel";
+import customNodeType from "../_constants/customNodeType";
+import useOption, { addOption, deleteOption } from "../_hooks/useOptions";
+import useIncomerOrder, { addOrder, changeOrder, deleteNodeOrder, deleteOrderFromNode } from "../_hooks/useIncomerOrder";
 
 const Container = styled(Box)(() => ({
     "&": {
@@ -44,23 +28,29 @@ const Container = styled(Box)(() => ({
     },
 }));
 
-const Workspace: FC = () => {
-    const [orders, orderDispatch] = useIncomerOrder();
+interface WorkspaceProps {
+    initialNodes?: Node[];
+    initialEdges?: Edge[];
+}
+
+const Workspace: FC<WorkspaceProps> = (props) => {
+    const { initialNodes = [TERMINAL_NODE], initialEdges = [] } = props;
+
     const [options, optionDispatch] = useOption();
-    const [nodes, setNodes, onNodeChange] = useNodesState([TERMINAL_NODE]);
-    const [edges, setEdges, onEdgeChange] = useEdgesState([]);
+    const [orders, orderDispatch] = useIncomerOrder();
+
+    const [nodes, setNodes, onNodeChange] = useNodesState(initialNodes);
+    const [edges, setEdges, onEdgeChange] = useEdgesState(initialEdges);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const [reactflowInstance, setReactflowInstance] = useState<ReactFlowInstance | null>(null);
-
-    // additional info
     const [selectedNodeId, setSelectedNodeId] = useState<string>();
 
-    const handleOnToolbarDragOver = useCallback((event: DragEvent) => {
+    const handleOnWidgetDragOver = useCallback((event: DragEvent) => {
         event.preventDefault();
     }, []);
 
-    const handleOnToolbarDrop = useCallback(
+    const handleOnWidgetDrop = useCallback(
         (event: DragEvent) => {
             event.preventDefault();
 
@@ -84,9 +74,9 @@ const Workspace: FC = () => {
 
             setNodes((nds) => [...nds, newNode]);
             optionDispatch(addOption(newOption));
-            orderDispatch(registerOrder(newNode.id));
+            orderDispatch(addOrder(newNode.id));
         },
-        [reactflowInstance, containerRef.current, orderDispatch]
+        [reactflowInstance, containerRef.current, optionDispatch, orderDispatch]
     );
 
     const handleOnConnect = useCallback(
@@ -100,19 +90,8 @@ const Workspace: FC = () => {
                 setEdges((eds) => addEdge(connection, eds));
             }
         },
-        [orderDispatch, orders]
+        [orders, orderDispatch, setEdges]
     );
-
-    const handleOnNodeClick = useCallback(
-        (_event: MouseEvent, node: Node) => {
-            setSelectedNodeId(node.id);
-        },
-        [options]
-    );
-
-    const handleOnPanelClose = useCallback(() => {
-        setSelectedNodeId(undefined);
-    }, [setSelectedNodeId]);
 
     const handleOnNodesDelete = useCallback(
         (nodes: Node[]) => {
@@ -128,22 +107,33 @@ const Workspace: FC = () => {
         (edges: Edge[]) => {
             orderDispatch(deleteOrderFromNode(edges));
         },
-        [orderDispatch, orders]
+        [orderDispatch]
     );
+
+    const handleOnNodeClick = useCallback(
+        (_event: MouseEvent, node: Node) => {
+            setSelectedNodeId(node.id);
+        },
+        [setSelectedNodeId]
+    );
+
+    const handleOnPanelClose = useCallback(() => {
+        setSelectedNodeId(undefined);
+    }, [setSelectedNodeId]);
 
     return (
         <Container ref={containerRef}>
             <ReactFlow
                 defaultViewport={{ x: 300, y: 100, zoom: 1 }}
-                edges={edges}
-                nodes={nodes}
                 deleteKeyCode="Delete"
-                selectionKeyCode={null}
+                edges={edges}
                 multiSelectionKeyCode={null}
+                nodes={nodes}
                 nodeTypes={customNodeType}
+                selectionKeyCode={null}
+                onDragOver={handleOnWidgetDragOver}
+                onDrop={handleOnWidgetDrop}
                 onInit={setReactflowInstance}
-                onDragOver={handleOnToolbarDragOver}
-                onDrop={handleOnToolbarDrop}
                 onEdgesChange={onEdgeChange}
                 onNodesChange={onNodeChange}
                 onNodeClick={handleOnNodeClick}

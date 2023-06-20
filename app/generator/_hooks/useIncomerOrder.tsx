@@ -6,7 +6,8 @@ import { Edge } from "reactflow";
 type Orders = Record<string, string[]>;
 
 enum OrderActionType {
-    REGISTER,
+    INIT,
+    ADD,
     CHANGE,
     DELETE_FROM_NODE,
     DELETE_NODE,
@@ -17,13 +18,15 @@ interface OrderAction {
     payload: Record<string, any>;
 }
 
-const initialOrders: Orders = {
+export const initialOrders: Orders = {
     [TERMINAL_NODE_ID]: [],
 };
 
 const reducer: Reducer<Orders, OrderAction> = (orders, action) => {
     switch (action.type) {
-        case OrderActionType.REGISTER:
+        case OrderActionType.INIT:
+            return action.payload;
+        case OrderActionType.ADD:
             return { ...orders, [action.payload.id]: [] };
         case OrderActionType.CHANGE: {
             const { id, orders: newOrders } = action.payload;
@@ -46,8 +49,13 @@ const reducer: Reducer<Orders, OrderAction> = (orders, action) => {
 
 // --- util function ---
 
-export const registerOrder = (id: string): OrderAction => ({
-    type: OrderActionType.REGISTER,
+export const initOrder = (orders: Orders): OrderAction => ({
+    type: OrderActionType.INIT,
+    payload: orders,
+});
+
+export const addOrder = (id: string): OrderAction => ({
+    type: OrderActionType.ADD,
     payload: { id },
 });
 

@@ -5,8 +5,11 @@ import { generate } from "@/util/generator";
 import useOption from "../_hooks/useOptions";
 import useIncomerOrder from "../_hooks/useIncomerOrder";
 import useInfo from "../_hooks/useInfo";
+import { useAxiosAuth } from "@/util/axios";
 
 const ControllerPanel: FC = () => {
+    const axios = useAxiosAuth();
+
     const nodes = useNodes();
     const edges = useEdges();
     const [options] = useOption();
@@ -17,13 +20,21 @@ const ControllerPanel: FC = () => {
         generate(info, nodes, edges, options, orders);
     }, [info, nodes, edges, options, orders]);
 
-    const handleOnSave = useCallback(() => {
-        console.log("info", info);
-        console.log("nodes", nodes);
-        console.log("edges", edges);
-        console.log("options", options);
-        console.log("orders", orders);
-    }, [info, nodes, edges, options, orders]);
+    const handleOnSave = useCallback(async () => {
+        try {
+            const { data: responseData } = await axios.post("/v1/template", {
+                info,
+                nodes,
+                edges,
+                options,
+                orders,
+            });
+            const { status } = responseData;
+            console.log(status);
+        } catch (error) {
+            console.error(error);
+        }
+    }, [axios, info, nodes, edges, options, orders]);
 
     return (
         <Box sx={{ width: 300, pb: 2, display: "flex", justifyContent: "space-between" }}>
