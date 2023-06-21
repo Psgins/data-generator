@@ -1,28 +1,12 @@
 "use client";
 
 import { FC, useCallback, useEffect, useState } from "react";
-import { Container, Grid, styled } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { useAxiosAuth } from "@/util/axios";
 import TemplateSkeleton from "./_components/TemplateSkeleton";
 import TemplateCard from "./_components/TemplateCard";
 import { Template, TemplateResponseData } from "./types";
-
-interface ResponseStatus {
-    code: string;
-    message: string;
-}
-
-interface ResponseModel<T> {
-    status: ResponseStatus;
-    data: T;
-}
-
-const Root = styled(Container)(({ theme }) => ({
-    "&": {
-        minHeight: "calc(100vh - 68.5px)",
-        backgroundColor: theme.palette.background.default,
-    },
-}));
+import { ResponseModel } from "@/types/api";
 
 const TemplatePage: FC = () => {
     const axios = useAxiosAuth();
@@ -43,27 +27,43 @@ const TemplatePage: FC = () => {
                 setTemplates(data.map((template) => ({ ...template, info: JSON.parse(template.info) })));
             }
         } catch (error) {
-            console.error("error", error);
+            console.error(error);
         } finally {
             setIsLoading(false);
         }
     }, [axios, setIsLoading, setTemplates]);
 
-    // return <TemplateSkeleton />;
+    const deleteTemplate = useCallback(
+        async (id: number) => {
+            try {
+                const { data: responseData } = await axios.delete(`/v1/template/${id}`);
+                loadTemplate();
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        [axios, loadTemplate]
+    );
+
+    const handleOnTemplateDelete = useCallback(
+        (id: number) => () => {
+            deleteTemplate(id);
+        },
+        [deleteTemplate]
+    );
+
     return isLoading ? (
         <TemplateSkeleton />
     ) : (
-        <Root maxWidth={false}>
-            <Container>
-                <Grid container>
-                    {templates.map((template) => (
-                        <Grid key={template.id} item xs={3}>
-                            <TemplateCard template={template} />
-                        </Grid>
-                    ))}
-                </Grid>
-            </Container>
-        </Root>
+        <Container>
+            <Grid container>
+                {templates.map((template) => (
+                    <Grid key={template.id} item xs={3}>
+                        <TemplateCard template={template} onDelete={handleOnTemplateDelete(template.id)} />
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
     );
 };
 

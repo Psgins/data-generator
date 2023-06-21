@@ -24,7 +24,8 @@ import useIncomerOrder, { addOrder, changeOrder, deleteNodeOrder, deleteOrderFro
 const Container = styled(Box)(() => ({
     "&": {
         height: "calc(100vh - 68.5px)",
-        backgroundColor: "#35363A",
+        width: "100%",
+        // backgroundColor: "#35363A",
     },
 }));
 
@@ -142,7 +143,7 @@ const Workspace: FC<WorkspaceProps> = (props) => {
                 onEdgesDelete={handleOnEdgesDelete}
             >
                 <WidgetsPanel />
-                <SettingPanel id={selectedNodeId} onClose={handleOnPanelClose} />
+                <SettingPanel selected={selectedNodeId} onClose={handleOnPanelClose} />
                 <Background variant={BackgroundVariant.Dots} />
                 <Controls />
             </ReactFlow>

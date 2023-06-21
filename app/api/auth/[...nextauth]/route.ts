@@ -12,9 +12,9 @@ const handler = NextAuth({
                 params: {
                     prompt: "consent",
                     access_type: "offline",
-                    response_type: "code"
-                }
-            }
+                    response_type: "code",
+                },
+            },
         }),
         GithubProvider({
             clientId: process.env.GITHUB_CLIENT_ID as string,
@@ -27,23 +27,26 @@ const handler = NextAuth({
         }),
     ],
     callbacks: {
-        async signIn({ account, profile, ...other}) {
+        async signIn({ account, profile, ...other }) {
+            console.log("sign in");
             return true;
         },
         async jwt({ token, account, ...other }) {
+            console.log("jwt");
             if (account) {
                 if (account.provider === "google") {
                     const { id_token: accessToken, refresh_token: refreshToken } = account;
-                    return { ...token, accessToken, refreshToken }
+                    return { ...token, accessToken, refreshToken };
                 }
             }
             return token;
         },
-        async session({ session, token}) {
+        async session({ session, token }) {
+            console.log("session");
             const { accessToken, refreshToken } = token;
             return { ...session, accessToken, refreshToken };
-        }
-    }
+        },
+    },
 });
 
 export { handler as GET, handler as POST };

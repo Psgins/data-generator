@@ -6,9 +6,10 @@ import { format } from "@/util/datetime";
 
 interface TemplateCardProps {
     template: Template;
+    onDelete: () => void;
 }
 
-const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
+const TemplateCard: FC<TemplateCardProps> = ({ template, onDelete }) => {
     const router = useRouter();
 
     const handleOnClick = useCallback(() => {
@@ -24,7 +25,7 @@ const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" onClick={onDelete}>
                     Delete
                 </Button>
             </CardActions>

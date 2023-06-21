@@ -6,12 +6,15 @@ import useOption from "../_hooks/useOptions";
 import useIncomerOrder from "../_hooks/useIncomerOrder";
 import useInfo from "../_hooks/useInfo";
 import { useAxiosAuth } from "@/util/axios";
+import { updateFlowStore, useFlowStore } from "../_hooks/useFlowStore";
+import { ResponseModel } from "@/types/api";
 
 const ControllerPanel: FC = () => {
     const axios = useAxiosAuth();
 
     const nodes = useNodes();
     const edges = useEdges();
+    const [flowStore, flowStoreDispatch] = useFlowStore();
     const [options] = useOption();
     const [orders] = useIncomerOrder();
     const [info] = useInfo();
@@ -22,19 +25,21 @@ const ControllerPanel: FC = () => {
 
     const handleOnSave = useCallback(async () => {
         try {
-            const { data: responseData } = await axios.post("/v1/template", {
-                info,
-                nodes,
-                edges,
-                options,
-                orders,
-            });
-            const { status } = responseData;
-            console.log(status);
+            const body = { info, nodes, edges, options, orders };
+            if (!flowStore.id) {
+                const { data: responseData } = await axios.post<ResponseModel<number>>("/v1/template", body);
+                const { status, data } = responseData;
+                flowStoreDispatch(updateFlowStore({ id: data }));
+                console.log("save new template", data);
+            } else {
+                const { data: responseData } = await axios.patch(`/v1/template/${flowStore.id}`, body);
+                const { status } = responseData;
+                console.log("update template");
+            }
         } catch (error) {
             console.error(error);
         }
-    }, [axios, info, nodes, edges, options, orders]);
+    }, [axios, flowStore, info, nodes, edges, options, orders, flowStoreDispatch]);
 
     return (
         <Box sx={{ width: 300, pb: 2, display: "flex", justifyContent: "space-between" }}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useAxiosAuth } from "@/util/axios";
 import { useSession } from "next-auth/react";
 import Workspace from "../_components/Workspace";
@@ -8,6 +8,7 @@ import { Edge, Node } from "reactflow";
 import useInfo, { initInfo } from "../_hooks/useInfo";
 import useOption, { initOption } from "../_hooks/useOptions";
 import useIncomerOrder, { initOrder } from "../_hooks/useIncomerOrder";
+import { initFlowStore, useFlowStore } from "../_hooks/useFlowStore";
 
 interface GeneratorParams {
     id: string;
@@ -21,6 +22,8 @@ const GeneratorTemplatePage: FC<GeneratorTemplatePageProps> = ({ params }) => {
     const { id } = params;
     const { data: session } = useSession();
     const axios = useAxiosAuth();
+
+    const [_flowStore, flowStoreDispatch] = useFlowStore();
     const [_info, infoDispatch] = useInfo();
     const [_option, optionDispatch] = useOption();
     const [_order, orderDispatch] = useIncomerOrder();
@@ -38,18 +41,20 @@ const GeneratorTemplatePage: FC<GeneratorTemplatePageProps> = ({ params }) => {
             const { status, data: responseData } = await axios.get(`/v1/template/${id}`);
             const { data } = responseData;
             const { info, nodes, edges, options, orders } = data;
-            setNodes(JSON.parse(nodes));
-            setEdges(JSON.parse(edges));
+
+            flowStoreDispatch(initFlowStore({ id: parseInt(id, 10) }));
             infoDispatch(initInfo(JSON.parse(info)));
             optionDispatch(initOption(JSON.parse(options)));
             orderDispatch(initOrder(JSON.parse(orders)));
+            setNodes(JSON.parse(nodes));
+            setEdges(JSON.parse(edges));
         } catch (error) {
             // TODO: handle error
             console.error("error", error);
         } finally {
             setIsLoading(false);
         }
-    }, [axios]);
+    }, [axios, flowStoreDispatch, setNodes, setEdges, infoDispatch, optionDispatch, orderDispatch, setNodes, setEdges]);
 
     return isLoading ? <>loading...</> : <Workspace initialEdges={edges} initialNodes={nodes} />;
 };

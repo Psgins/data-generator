@@ -1,7 +1,10 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Container } from "@mui/material";
+import { FC } from "react";
 
-export default function Home() {
-  return <Typography variant="h3">aa</Typography>;
-}
+const RootPage: FC = () => {
+    return <Container maxWidth="xl">Root</Container>;
+};
+
+export default RootPage;

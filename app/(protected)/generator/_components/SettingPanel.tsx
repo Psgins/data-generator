@@ -6,13 +6,13 @@ import NodeSettingPanel from "./NodeSettingPanel";
 import ControllerPanel from "./ControllerPanel";
 
 interface SettingPanelProps {
-    id?: string;
+    selected?: string;
     onClose: () => void;
 }
 
-const SettingPanel: FC<SettingPanelProps> = ({ id, onClose }) => {
+const SettingPanel: FC<SettingPanelProps> = ({ selected, onClose }) => {
     const nodes = useNodes<NodeData>();
-    const selectedNode = useMemo(() => nodes.find((node) => node.id === id), [nodes, id]);
+    const selectedNode = useMemo(() => nodes.find((node) => node.id === selected), [nodes, selected]);
 
     return (
         <Panel position="top-right">
