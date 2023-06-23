@@ -2,8 +2,8 @@
 
 import { FC, PropsWithChildren } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
+import { SessionProvider } from "@/hooks/useSession";
 import theme from "@/util/theme";
-import { SessionProvider } from "next-auth/react";
 
 const ClientProvider: FC<PropsWithChildren> = ({ children }) => {
     return (

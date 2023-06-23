@@ -2,13 +2,13 @@
 
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useAxiosAuth } from "@/util/axios";
-import { useSession } from "next-auth/react";
 import Workspace from "../_components/Workspace";
 import { Edge, Node } from "reactflow";
 import useInfo, { initInfo } from "../_hooks/useInfo";
 import useOption, { initOption } from "../_hooks/useOptions";
 import useIncomerOrder, { initOrder } from "../_hooks/useIncomerOrder";
 import { initFlowStore, useFlowStore } from "../_hooks/useFlowStore";
+import useSession from "@/hooks/useSession";
 
 interface GeneratorParams {
     id: string;
@@ -20,7 +20,6 @@ interface GeneratorTemplatePageProps {
 
 const GeneratorTemplatePage: FC<GeneratorTemplatePageProps> = ({ params }) => {
     const { id } = params;
-    const { data: session } = useSession();
     const axios = useAxiosAuth();
 
     const [_flowStore, flowStoreDispatch] = useFlowStore();
@@ -34,7 +33,7 @@ const GeneratorTemplatePage: FC<GeneratorTemplatePageProps> = ({ params }) => {
 
     useEffect(() => {
         init();
-    }, [session]);
+    }, []);
 
     const init = useCallback(async () => {
         try {

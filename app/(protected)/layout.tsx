@@ -1,16 +1,16 @@
 "use client";
 
 import { FC, PropsWithChildren } from "react";
-import { useSession } from "next-auth/react";
+import useSession, { SessionStatus } from "@/hooks/useSession";
 
 const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
-    const { status } = useSession();
-    switch (status) {
-        case "loading":
+    const [session] = useSession();
+    switch (session.status) {
+        case SessionStatus.UNKNOWN:
             return <>loading</>;
-        case "authenticated":
+        case SessionStatus.AUTHENTICATED:
             return <>{children}</>;
-        case "unauthenticated":
+        case SessionStatus.UNAUTHENTICATED:
         default:
             return <>not allow</>;
     }

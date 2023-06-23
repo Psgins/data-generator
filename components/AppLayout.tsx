@@ -1,7 +1,7 @@
 "use client";
 
-import { Box, styled } from "@mui/material";
 import { FC, PropsWithChildren } from "react";
+import { Box, styled } from "@mui/material";
 import AppBar from "./AppBar";
 import Footer from "./Footer";
 
@@ -12,7 +12,7 @@ const RootContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
 }));
 
-const ChildrenContainer = styled(Box)(({ theme }) => ({
+const ChildrenContainer = styled(Box)(() => ({
     display: "flex",
     flexGrow: 1,
 }));

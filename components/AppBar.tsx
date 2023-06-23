@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
 import HiveIcon from "@mui/icons-material/Hive";
-import DGLoginButton from "./DGLoginButton";
+import LoginButton from "./LoginButton";
 import Link from "next/link";
 
 const GeneratorAppBar: FC = () => {
@@ -55,7 +55,7 @@ const GeneratorAppBar: FC = () => {
                         </Link>
                     </Box>
                     <Box sx={{ ml: 1 }}>
-                        <DGLoginButton />
+                        <LoginButton />
                     </Box>
                 </Toolbar>
             </Container>
