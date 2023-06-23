@@ -3,7 +3,7 @@
 import { FC, PropsWithChildren } from "react";
 import { Box, styled } from "@mui/material";
 import AppBar from "./AppBar";
-import Footer from "./Footer";
+import AppFooter from "./AppFooter";
 
 const RootContainer = styled(Box)(({ theme }) => ({
     display: "flex",
@@ -22,7 +22,7 @@ const AppLayout: FC<PropsWithChildren> = ({ children }) => {
         <RootContainer>
             <AppBar />
             <ChildrenContainer>{children}</ChildrenContainer>
-            <Footer />
+            <AppFooter />
         </RootContainer>
     );
 };

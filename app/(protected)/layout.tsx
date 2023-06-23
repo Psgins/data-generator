@@ -2,17 +2,18 @@
 
 import { FC, PropsWithChildren } from "react";
 import useSession, { SessionStatus } from "@/hooks/useSession";
+import LoadingPage from "./_components/LoadingPage";
 
 const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
     const [session] = useSession();
     switch (session.status) {
-        case SessionStatus.UNKNOWN:
-            return <>loading</>;
         case SessionStatus.AUTHENTICATED:
             return <>{children}</>;
         case SessionStatus.UNAUTHENTICATED:
-        default:
             return <>not allow</>;
+        case SessionStatus.UNKNOWN:
+        default:
+            return <LoadingPage />;
     }
 };
 
