@@ -2,8 +2,8 @@ import { Edge, Node } from "reactflow";
 import { padStart } from "lodash";
 import { NodeType } from "../_types/nodeType";
 import { NodeOption } from "../_types/nodeOption";
-import { PaddingOption, RandomNumberOption } from "../_types/nodeOptions";
-import { TERMINAL_NODE_ID } from "../_constants/terminalNodeId";
+import { PaddingOption, RandomNumberOption } from "../_types/nodeOption";
+import { TERMINAL_NODE_ID } from "../_constants/terminalNode";
 import { GeneratorStorage } from "./store";
 
 type SupplyChain<T> = (global: GeneratorStorage, local: GeneratorStorage) => T;

@@ -2,10 +2,9 @@ import { Node, XYPosition } from "reactflow";
 import { v4 as UUID } from "uuid";
 import { NodeType } from "../_types/nodeType";
 import { NodeOption } from "../_types/nodeOption";
-// import { CounterNodeData, FixedValueNodeData, NodeData, PaddingNodeData, RandomNumberNodeData } from "@/types/generator/nodeData";
-import { FixedInputOption, PaddingOption, RandomNumberOption } from "../_types/nodeOptions";
+import { FixedInputOption, PaddingOption, RandomNumberOption } from "../_types/nodeOption";
 import { TERMINAL_NODE } from "../_constants/terminalNode";
-import { TERMINAL_NODE_OPTION } from "../_constants/terminalNodeOption";
+import { TERMINAL_NODE_OPTION } from "../_constants/terminalNode";
 
 export const createNodeInfo = (nodeType: NodeType, position: XYPosition): [Node, NodeOption<any>] => {
     switch (nodeType) {
