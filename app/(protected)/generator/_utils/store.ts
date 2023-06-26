@@ -1,7 +1,7 @@
 import { Node } from "reactflow";
 import { NodeType } from "../_types/nodeType";
 import { NodeOption } from "../_types/nodeOption";
-import { RandomNumberOption } from "../_types/nodeOptions";
+import { RandomNumberOption } from "../_types/nodeOption";
 
 export type GeneratorStorage = Record<Node["id"], string | number>;
 

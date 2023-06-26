@@ -18,7 +18,7 @@ import { TERMINAL_NODE } from "../_constants/terminalNode";
 import customNodeType from "../_constants/customNodeType";
 import useOption, { addOption, deleteOption } from "../_hooks/useOptions";
 import useIncomerOrder, { addOrder, changeOrder, deleteNodeOrder, deleteOrderFromNode } from "../_hooks/useIncomerOrder";
-import { createNodeInfo } from "../_utils/constants";
+import { createNodeInfo } from "../_utils/node";
 import WidgetsPanel from "./WidgetsPanel";
 import SettingPanel from "./SettingPanel";
 
