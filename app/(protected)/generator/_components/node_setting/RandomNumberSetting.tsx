@@ -1,7 +1,6 @@
-import { NodeOption } from "@/types/generator";
+import { FC, SyntheticEvent, useCallback } from "react";
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import { FC, SyntheticEvent, useCallback, useState } from "react";
-import { RandomNumberOption } from "@/types/generator/nodeOption";
+import { NodeOption, RandomNumberOption } from "../../_types/nodeOption";
 
 interface RandomNumberSettingProps {
     option: NodeOption<RandomNumberOption>;

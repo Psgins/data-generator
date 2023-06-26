@@ -1,7 +1,7 @@
 import { FC, DragEventHandler } from "react";
 import { Box, Tooltip, styled } from "@mui/material";
-import { NodeType } from "@/types/generator";
 import FontDownloadIcon from "@mui/icons-material/FontDownload";
+import { NodeType } from "../../_types/nodeType";
 
 const Root = styled(Box)(() => ({
     "&": {

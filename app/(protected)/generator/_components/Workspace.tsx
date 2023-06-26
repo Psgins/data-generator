@@ -13,19 +13,19 @@ import ReactFlow, {
     useNodesState,
 } from "reactflow";
 import { Box, styled } from "@mui/material";
-import { NodeType } from "@/types/generator";
-import { TERMINAL_NODE, createNodeInfo } from "@/util/generator/constants";
-import WidgetsPanel from "./WidgetsPanel";
-import SettingPanel from "./SettingPanel";
+import { NodeType } from "../_types/nodeType";
+import { TERMINAL_NODE } from "../_constants/terminalNode";
 import customNodeType from "../_constants/customNodeType";
 import useOption, { addOption, deleteOption } from "../_hooks/useOptions";
 import useIncomerOrder, { addOrder, changeOrder, deleteNodeOrder, deleteOrderFromNode } from "../_hooks/useIncomerOrder";
+import { createNodeInfo } from "../_utils/constants";
+import WidgetsPanel from "./WidgetsPanel";
+import SettingPanel from "./SettingPanel";
 
 const Container = styled(Box)(() => ({
     "&": {
         height: "calc(100vh - 68.5px)",
         width: "100%",
-        // backgroundColor: "#35363A",
     },
 }));
 

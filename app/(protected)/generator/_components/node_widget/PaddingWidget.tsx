@@ -1,7 +1,7 @@
-import { DragEventHandler, FC } from "react";
+import { FC, DragEventHandler } from "react";
 import { Box, Tooltip, styled } from "@mui/material";
-import { NodeType } from "@/types/generator";
-import Filter1OutlinedIcon from "@mui/icons-material/Filter1Outlined";
+import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
+import { NodeType } from "../../_types/nodeType";
 
 const Root = styled(Box)(() => ({
     "&": {
@@ -17,18 +17,18 @@ const Root = styled(Box)(() => ({
     },
 }));
 
-const RandomNumberWidget: FC = () => {
+const PaddingWidget: FC = () => {
     const handleOnDragStart: DragEventHandler<HTMLDivElement> = (event) => {
-        event.dataTransfer.setData("create_node", NodeType[NodeType.RANDOM_NUMBER]);
+        event.dataTransfer.setData("create_node", NodeType[NodeType.PADDING]);
     };
 
     return (
-        <Tooltip placement="top" title="Random Number">
+        <Tooltip placement="top" title="Padding">
             <Root draggable onDragStart={handleOnDragStart}>
-                <Filter1OutlinedIcon />
+                <AlignHorizontalLeftIcon />
             </Root>
         </Tooltip>
     );
 };
 
-export default RandomNumberWidget;
+export default PaddingWidget;

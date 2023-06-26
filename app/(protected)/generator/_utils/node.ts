@@ -1,5 +1,5 @@
 import { Node } from "reactflow";
-import { NodeType } from "@/types/generator";
+import { NodeType } from "../_types/nodeType";
 
 export const getNodeNameByNodeType = (type: Node["type"]): string => {
     switch (type) {

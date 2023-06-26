@@ -1,10 +1,9 @@
 import { FC } from "react";
 import { NodeProps, Position } from "reactflow";
-import NodeCard from "../flow/NodeCard";
-import NodeHandle from "../flow/NodeHandle";
-import { PaddingNodeData } from "@/types/generator/nodeData";
+import NodeCard from "../NodeCard";
+import NodeHandle from "../NodeHandle";
 
-const PaddingNodeType: FC<NodeProps<PaddingNodeData>> = () => {
+const PaddingNodeType: FC<NodeProps> = () => {
     return (
         <NodeCard title="Padding">
             <NodeHandle id="T0" type="target" position={Position.Left} />

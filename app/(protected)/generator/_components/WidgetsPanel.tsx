@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Panel } from "reactflow";
-import FixedValueWidget from "@/components/widgets/FixedValueWidget";
-import RandomNumberWidget from "@/components/widgets/RandomNumberWidget";
-import CounterWidget from "@/components/widgets/CounterWidget";
-import PaddingWidget from "@/components/widgets/PaddingWidget";
+import FixedValueWidget from "./node_widget/FixedValueWidget";
+import RandomNumberWidget from "./node_widget/RandomNumberWidget";
+import CounterWidget from "./node_widget/CounterWidget";
+import PaddingWidget from "./node_widget/PaddingWidget";
 import { Box, Divider, Paper } from "@mui/material";
 
 const WidgetsPanel: FC = () => {

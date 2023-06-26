@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import useSession, { Session, updateSession } from "@/hooks/useSession";
 
@@ -32,7 +32,7 @@ export const useAxiosAuth = () => {
 
     useEffect(() => {
         const requestInterceptorId = axiosAuth.interceptors.request.use(injectToken(session));
-        const responseInterceptorId = axiosAuth.interceptors.response.use((response) => response, refreshToken(session, refresh));
+        const responseInterceptorId = axiosAuth.interceptors.response.use((response) => response, refreshToken(refresh));
         return () => {
             axiosAuth.interceptors.request.eject(requestInterceptorId);
             axiosAuth.interceptors.response.eject(responseInterceptorId);
@@ -50,7 +50,7 @@ const injectToken = (session: Session) => (config: InternalAxiosRequestConfig<an
     return config;
 };
 
-const refreshToken = (session: Session, refresh: () => Promise<string>) => async (error: any) => {
+const refreshToken = (refresh: () => Promise<string>) => async (error: any) => {
     const prevRequest = error.config;
     if (error.response.status === 401 && !prevRequest.retry) {
         prevRequest.retry = true;

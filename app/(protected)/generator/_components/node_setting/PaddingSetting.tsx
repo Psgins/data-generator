@@ -1,7 +1,6 @@
-import { NodeOption } from "@/types/generator";
-import { PaddingOption } from "@/types/generator/nodeOption";
-import { Grid, TextField } from "@mui/material";
 import { ChangeEvent, FC, useCallback } from "react";
+import { Grid, TextField } from "@mui/material";
+import { NodeOption, PaddingOption } from "../../_types/nodeOption";
 
 interface PaddingSettingProps {
     option: NodeOption<PaddingOption>;

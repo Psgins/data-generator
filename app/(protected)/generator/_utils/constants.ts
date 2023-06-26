@@ -1,32 +1,18 @@
 import { Node, XYPosition } from "reactflow";
 import { v4 as UUID } from "uuid";
-import { NodeOption, NodeType } from "@/types/generator";
-import { CounterNodeData, FixedValueNodeData, NodeData, PaddingNodeData, RandomNumberNodeData } from "@/types/generator/nodeData";
-import { FixedInputOption, PaddingOption, RandomNumberOption } from "@/types/generator/nodeOption";
+import { NodeType } from "../_types/nodeType";
+import { NodeOption } from "../_types/nodeOption";
+// import { CounterNodeData, FixedValueNodeData, NodeData, PaddingNodeData, RandomNumberNodeData } from "@/types/generator/nodeData";
+import { FixedInputOption, PaddingOption, RandomNumberOption } from "../_types/nodeOptions";
+import { TERMINAL_NODE } from "../_constants/terminalNode";
+import { TERMINAL_NODE_OPTION } from "../_constants/terminalNodeOption";
 
-export const TERMINAL_NODE_ID = "TERMINAL_NODE";
-
-export const TERMINAL_NODE: Node<undefined> = {
-    id: TERMINAL_NODE_ID,
-    position: { x: 0, y: 0 },
-    type: NodeType.TERMINAL,
-    data: undefined,
-    deletable: false,
-};
-
-export const TERMINAL_NODE_OPTION: NodeOption<void> = {
-    id: TERMINAL_NODE_ID,
-    name: "Terminal",
-    nodeType: NodeType.TERMINAL,
-    data: undefined,
-};
-
-export const createNodeInfo = (nodeType: NodeType, position: XYPosition): [Node<NodeData>, NodeOption<any>] => {
+export const createNodeInfo = (nodeType: NodeType, position: XYPosition): [Node, NodeOption<any>] => {
     switch (nodeType) {
         case NodeType.COUNTER: {
             const id = UUID();
             const nodeType = NodeType.COUNTER;
-            const node: Node<CounterNodeData> = {
+            const node: Node = {
                 id,
                 position,
                 type: NodeType.COUNTER,
@@ -43,7 +29,7 @@ export const createNodeInfo = (nodeType: NodeType, position: XYPosition): [Node<
         case NodeType.FIXED_VALUE: {
             const id = UUID();
             const nodeType = NodeType.FIXED_VALUE;
-            const node: Node<FixedValueNodeData> = {
+            const node: Node = {
                 id,
                 position,
                 type: NodeType.FIXED_VALUE,
@@ -60,7 +46,7 @@ export const createNodeInfo = (nodeType: NodeType, position: XYPosition): [Node<
         case NodeType.RANDOM_NUMBER: {
             const id = UUID();
             const nodeType = NodeType.RANDOM_NUMBER;
-            const node: Node<RandomNumberNodeData> = {
+            const node: Node = {
                 id,
                 position,
                 type: NodeType.RANDOM_NUMBER,
@@ -80,7 +66,7 @@ export const createNodeInfo = (nodeType: NodeType, position: XYPosition): [Node<
         case NodeType.PADDING: {
             const id = UUID();
             const nodeType = NodeType.PADDING;
-            const node: Node<PaddingNodeData> = {
+            const node: Node = {
                 id,
                 position,
                 data: undefined,

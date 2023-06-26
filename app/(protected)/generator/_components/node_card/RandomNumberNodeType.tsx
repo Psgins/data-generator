@@ -1,10 +1,9 @@
 import { FC } from "react";
 import { NodeProps, Position } from "reactflow";
-import { RandomNumberNodeData } from "@/types/generator/nodeData";
-import NodeCard from "../flow/NodeCard";
-import NodeHandle from "../flow/NodeHandle";
+import NodeCard from "../NodeCard";
+import NodeHandle from "../NodeHandle";
 
-const RandomNumberNodeType: FC<NodeProps<RandomNumberNodeData>> = () => {
+const RandomNumberNodeType: FC<NodeProps> = () => {
     return (
         <NodeCard title="Random Number">
             <NodeHandle id="0" type="source" position={Position.Right} />

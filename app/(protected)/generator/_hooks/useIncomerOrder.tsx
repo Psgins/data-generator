@@ -1,7 +1,7 @@
-import { omit } from "lodash";
-import { TERMINAL_NODE_ID } from "@/util/generator";
 import { Reducer, createContext, useReducer, PropsWithChildren, FC, Dispatch, useContext } from "react";
 import { Edge } from "reactflow";
+import { omit } from "lodash";
+import { TERMINAL_NODE_ID } from "../_constants/terminalNode";
 
 type Orders = Record<string, string[]>;
 

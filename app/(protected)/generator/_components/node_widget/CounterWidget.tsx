@@ -1,7 +1,7 @@
-import { FC, DragEventHandler } from "react";
-import { Box, Card, Tooltip, styled } from "@mui/material";
-import { NodeType } from "@/types/generator";
-import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
+import { DragEventHandler, FC } from "react";
+import { Box, Tooltip, styled } from "@mui/material";
+import PlusOneOutlinedIcon from "@mui/icons-material/PlusOneOutlined";
+import { NodeType } from "../../_types/nodeType";
 
 const Root = styled(Box)(() => ({
     "&": {
@@ -17,18 +17,18 @@ const Root = styled(Box)(() => ({
     },
 }));
 
-const PaddingWidget: FC = () => {
+const CounterWidget: FC = () => {
     const handleOnDragStart: DragEventHandler<HTMLDivElement> = (event) => {
-        event.dataTransfer.setData("create_node", NodeType[NodeType.PADDING]);
+        event.dataTransfer.setData("create_node", NodeType[NodeType.COUNTER]);
     };
 
     return (
-        <Tooltip placement="top" title="Padding">
+        <Tooltip placement="top" title="Counter">
             <Root draggable onDragStart={handleOnDragStart}>
-                <AlignHorizontalLeftIcon />
+                <PlusOneOutlinedIcon />
             </Root>
         </Tooltip>
     );
 };
 
-export default PaddingWidget;
+export default CounterWidget;

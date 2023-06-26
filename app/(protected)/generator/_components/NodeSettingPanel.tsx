@@ -1,15 +1,14 @@
 import { FC } from "react";
 import { Node } from "reactflow";
 import { Paper, Typography, Grid, Tooltip, Box, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import NodeOptionDecision from "./NodeOptionDecision";
 import IncomerOrderOption from "./IncomerOrderOption";
-import { NodeData } from "@/types/generator/nodeData";
-import CloseIcon from "@mui/icons-material/Close";
-import { getNodeNameByNodeType } from "@/util/generator/node";
+import { getNodeNameByNodeType } from "../_utils/node";
 
 interface NodeSettingPanelProps {
-    node: Node<NodeData>;
+    node: Node;
     onClose: () => void;
 }
 

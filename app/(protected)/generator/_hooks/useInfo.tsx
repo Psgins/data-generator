@@ -1,7 +1,11 @@
-import { Info } from "@/types/generator";
 import { Dispatch, FC, PropsWithChildren, Reducer, createContext, useContext, useReducer } from "react";
 
 // --- type ---
+
+export interface Info {
+    name: string;
+    iteration: string;
+}
 
 enum InfoActionType {
     INIT,

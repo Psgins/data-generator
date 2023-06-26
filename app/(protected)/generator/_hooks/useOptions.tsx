@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, createContext, useReducer, Reducer, Dispatch, useContext } from "react";
-import { NodeOption } from "@/types/generator";
-import { TERMINAL_NODE_OPTION } from "@/util/generator";
+import { NodeOption } from "../_types/nodeOption";
+import { TERMINAL_NODE_OPTION } from "../_constants/terminalNode";
 
 // --- type ---
 

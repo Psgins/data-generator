@@ -1,7 +1,7 @@
 import { DragEventHandler, FC } from "react";
 import { Box, Tooltip, styled } from "@mui/material";
-import { NodeType } from "@/types/generator";
-import PlusOneOutlinedIcon from "@mui/icons-material/PlusOneOutlined";
+import Filter1OutlinedIcon from "@mui/icons-material/Filter1Outlined";
+import { NodeType } from "../../_types/nodeType";
 
 const Root = styled(Box)(() => ({
     "&": {
@@ -17,18 +17,18 @@ const Root = styled(Box)(() => ({
     },
 }));
 
-const CounterWidget: FC = () => {
+const RandomNumberWidget: FC = () => {
     const handleOnDragStart: DragEventHandler<HTMLDivElement> = (event) => {
-        event.dataTransfer.setData("create_node", NodeType[NodeType.COUNTER]);
+        event.dataTransfer.setData("create_node", NodeType[NodeType.RANDOM_NUMBER]);
     };
 
     return (
-        <Tooltip placement="top" title="Counter">
+        <Tooltip placement="top" title="Random Number">
             <Root draggable onDragStart={handleOnDragStart}>
-                <PlusOneOutlinedIcon />
+                <Filter1OutlinedIcon />
             </Root>
         </Tooltip>
     );
 };
 
-export default CounterWidget;
+export default RandomNumberWidget;

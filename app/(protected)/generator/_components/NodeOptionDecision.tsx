@@ -1,11 +1,12 @@
 import { FC, useMemo, useCallback, memo } from "react";
 import { Node } from "reactflow";
-import FixedValueSetting from "@/components/options/FixedValueSetting";
-import RandomNumberSetting from "@/components/options/RandomNumberSetting";
-import { NodeOption, NodeType } from "@/types/generator";
-import useOption, { changeOption } from "../_hooks/useOptions";
-import PaddingSetting from "@/components/options/PaddingSetting";
 import { Typography } from "@mui/material";
+import { NodeType } from "../_types/nodeType";
+import { NodeOption } from "../_types/nodeOption";
+import useOption, { changeOption } from "../_hooks/useOptions";
+import FixedValueSetting from "./node_setting/FixedValueSetting";
+import RandomNumberSetting from "./node_setting/RandomNumberSetting";
+import PaddingSetting from "./node_setting/PaddingSetting";
 
 interface NodeOptionDecisionProps {
     id: string;

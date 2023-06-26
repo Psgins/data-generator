@@ -1,9 +1,9 @@
 import { Edge, Node } from "reactflow";
 import { padStart } from "lodash";
-import { NodeOption, NodeType } from "@/types/generator";
-import { NodeData } from "@/types/generator/nodeData";
-import { PaddingOption, RandomNumberOption } from "@/types/generator/nodeOption";
-import { TERMINAL_NODE_ID } from "./constants";
+import { NodeType } from "../_types/nodeType";
+import { NodeOption } from "../_types/nodeOption";
+import { PaddingOption, RandomNumberOption } from "../_types/nodeOptions";
+import { TERMINAL_NODE_ID } from "../_constants/terminalNodeId";
 import { GeneratorStorage } from "./store";
 
 type SupplyChain<T> = (global: GeneratorStorage, local: GeneratorStorage) => T;
@@ -48,7 +48,7 @@ const createCounterSupplier =
         return value;
     };
 
-const createPaddingSupplier = (node: Node<NodeData>, nodes: Node[], options: NodeOption<any>[], orders: Record<string, string[]>): SupplyChain<string> => {
+const createPaddingSupplier = (node: Node, nodes: Node[], options: NodeOption<any>[], orders: Record<string, string[]>): SupplyChain<string> => {
     const children = getChildren(node, nodes, orders);
     const suppliers = children.map((node) => createSupplier(node, nodes, options, orders));
 

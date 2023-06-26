@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useCallback } from "react";
 import { TextField } from "@mui/material";
-import { NodeOption } from "@/types/generator";
-import { FixedInputOption } from "@/types/generator/nodeOption";
+import { NodeOption, FixedInputOption } from "../../_types/nodeOption";
 
 interface FixedInputOptionProps {
     option: NodeOption<FixedInputOption>;

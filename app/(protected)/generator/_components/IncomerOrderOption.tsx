@@ -3,10 +3,6 @@ import { Chip, Divider, Grid, styled } from "@mui/material";
 import useIncomerOrder, { changeOrder } from "../_hooks/useIncomerOrder";
 import IncomerOrderItem from "./IncomerOrderItem";
 
-const ReorderableGrid = styled(Grid)(() => ({
-    "&:hover": {},
-}));
-
 interface IncomerOrderOptionProps {
     nodeId: string;
 }

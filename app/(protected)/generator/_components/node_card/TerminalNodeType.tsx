@@ -1,10 +1,9 @@
 import { FC } from "react";
 import { NodeProps, Position } from "reactflow";
-import NodeCard from "../flow/NodeCard";
-import NodeHandle from "../flow/NodeHandle";
-import { TerminalNodeData } from "@/types/generator/nodeData";
+import NodeCard from "../NodeCard";
+import NodeHandle from "../NodeHandle";
 
-const TerminalNodeType: FC<NodeProps<TerminalNodeData>> = () => {
+const TerminalNodeType: FC<NodeProps> = () => {
     return (
         <NodeCard title="OUTPUT">
             <NodeHandle id="1" type="target" position={Position.Left} />
