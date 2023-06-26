@@ -1,14 +1,14 @@
 "use client";
 
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useAxiosAuth } from "@/util/axios";
-import Workspace from "../_components/Workspace";
 import { Edge, Node } from "reactflow";
 import useInfo, { initInfo } from "../_hooks/useInfo";
 import useOption, { initOption } from "../_hooks/useOptions";
 import useIncomerOrder, { initOrder } from "../_hooks/useIncomerOrder";
 import { initFlowStore, useFlowStore } from "../_hooks/useFlowStore";
-import useSession from "@/hooks/useSession";
+import Workspace from "../_components/Workspace";
+import WorkspaceSkeleton from "../_components/WorkspaceSkeleton";
 
 interface GeneratorParams {
     id: string;
@@ -37,7 +37,7 @@ const GeneratorTemplatePage: FC<GeneratorTemplatePageProps> = ({ params }) => {
 
     const init = useCallback(async () => {
         try {
-            const { status, data: responseData } = await axios.get(`/v1/template/${id}`);
+            const { data: responseData } = await axios.get(`/v1/template/${id}`);
             const { data } = responseData;
             const { info, nodes, edges, options, orders } = data;
 
@@ -55,7 +55,7 @@ const GeneratorTemplatePage: FC<GeneratorTemplatePageProps> = ({ params }) => {
         }
     }, [axios, flowStoreDispatch, setNodes, setEdges, infoDispatch, optionDispatch, orderDispatch, setNodes, setEdges]);
 
-    return isLoading ? <>loading...</> : <Workspace initialEdges={edges} initialNodes={nodes} />;
+    return isLoading ? <WorkspaceSkeleton /> : <Workspace initialEdges={edges} initialNodes={nodes} />;
 };
 
 export default GeneratorTemplatePage;

@@ -7,7 +7,7 @@ const AppFooter: FC = () => {
         <Paper elevation={1}>
             <Container maxWidth="xl" sx={{ py: 2 }}>
                 <Grid container>
-                    <Grid item xs={3}>
+                    <Grid item xs={9}>
                         <Typography variant="h6">Data Generator Project</Typography>
                         <Typography variant="body2">Demo Project</Typography>
                     </Grid>

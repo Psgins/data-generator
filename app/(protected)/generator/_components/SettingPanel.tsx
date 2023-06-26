@@ -1,4 +1,3 @@
-import { NodeData } from "@/types/generator/nodeData";
 import { FC, useMemo } from "react";
 import { Panel, useNodes } from "reactflow";
 import GeneratorSettingPanel from "./GeneratorSettingPanel";
@@ -11,7 +10,7 @@ interface SettingPanelProps {
 }
 
 const SettingPanel: FC<SettingPanelProps> = ({ selected, onClose }) => {
-    const nodes = useNodes<NodeData>();
+    const nodes = useNodes();
     const selectedNode = useMemo(() => nodes.find((node) => node.id === selected), [nodes, selected]);
 
     return (

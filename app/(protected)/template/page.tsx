@@ -3,10 +3,10 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { useAxiosAuth } from "@/util/axios";
+import { ResponseModel } from "@/types/api";
 import TemplateSkeleton from "./_components/TemplateSkeleton";
 import TemplateCard from "./_components/TemplateCard";
 import { Template, TemplateResponseData } from "./types";
-import { ResponseModel } from "@/types/api";
 
 const TemplatePage: FC = () => {
     const axios = useAxiosAuth();
@@ -56,7 +56,7 @@ const TemplatePage: FC = () => {
         <TemplateSkeleton />
     ) : (
         <Container>
-            <Grid container>
+            <Grid container spacing={2} sx={{ mt: 2 }}>
                 {templates.map((template) => (
                     <Grid key={template.id} item xs={3}>
                         <TemplateCard template={template} onDelete={handleOnTemplateDelete(template.id)} />

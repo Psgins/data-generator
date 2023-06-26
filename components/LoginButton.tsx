@@ -9,8 +9,8 @@ const LoginButton: FC = () => {
     const [session, sessionDispatch] = useSession();
 
     const handleOnSignIn = () => {
-        const client_id = "";
-        const redirect = "http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback";
+        const client_id = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+        const redirect = encodeURIComponent(process.env.NEXT_PUBLIC_GOOGLE_CALLBACK || "");
         const scope = "openid email profile";
         router.replace(
             `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect}&scope=${scope}&response_type=code&prompt=consent&access_type=offline`

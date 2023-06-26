@@ -5,11 +5,11 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 import useSession, { Session, updateSession } from "@/hooks/useSession";
 
 const axiosDefault = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: process.env.NEXT_PUBLIC_BACKEND,
 });
 
 const axiosAuth = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: process.env.NEXT_PUBLIC_BACKEND,
 });
 
 export const useAxios = () => {
