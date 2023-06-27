@@ -1,4 +1,4 @@
-import { Info } from "@/types/generator";
+import { Info } from "../generator/_hooks/useInfo";
 
 export interface TemplateResponseData {
     id: number;

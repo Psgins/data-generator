@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useState } from "react";
 import { useEdges, useNodes } from "reactflow";
 import { useSnackbar } from "notistack";
 import { Box, Button } from "@mui/material";
@@ -7,11 +7,12 @@ import { useAxiosAuth } from "@/util/axios";
 import useOption from "../_hooks/useOptions";
 import useIncomerOrder from "../_hooks/useIncomerOrder";
 import useInfo from "../_hooks/useInfo";
-import { generate } from "../_utils/generator";
+import { generate, preview } from "../_utils/generator";
 import { updateFlowStore, useFlowStore } from "../_hooks/useFlowStore";
 import ContentPasteSearchOutlinedIcon from "@mui/icons-material/ContentPasteSearchOutlined";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import PreviewModal from "./PreviewModal";
 
 const ControllerPanel: FC = () => {
     const axios = useAxiosAuth();
@@ -24,7 +25,14 @@ const ControllerPanel: FC = () => {
     const [orders] = useIncomerOrder();
     const [info] = useInfo();
 
+    const [previewData, setPreviewData] = useState<string[]>([]);
+
     const handleOnPreview = useCallback(() => {
+        const data = preview(info, nodes, edges, options, orders);
+        setPreviewData(data);
+    }, [info, nodes, edges, options, orders, setPreviewData]);
+
+    const handleOnGenerate = useCallback(() => {
         generate(info, nodes, edges, options, orders);
     }, [info, nodes, edges, options, orders]);
 
@@ -46,18 +54,27 @@ const ControllerPanel: FC = () => {
         }
     }, [axios, flowStore, info, nodes, edges, options, orders, enqueueSnackbar, flowStoreDispatch]);
 
+    const handleOnPreviewClose = useCallback(() => setPreviewData([]), []);
+
     return (
-        <Box sx={{ width: 300, pb: 2, display: "flex", justifyContent: "flex-start" }}>
-            <Button variant="contained" color="secondary" startIcon={<ContentPasteSearchOutlinedIcon />} onClick={handleOnPreview}>
-                preview
-            </Button>
-            <Button variant="contained" color="primary" sx={{ ml: 1, pl: 1, pr: 1, minWidth: 4 }}>
-                <SaveAltOutlinedIcon />
-            </Button>
-            <Button variant="contained" color="info" onClick={handleOnSave} sx={{ ml: 1, pl: 1, pr: 1, minWidth: 4 }}>
-                <SaveOutlinedIcon />
-            </Button>
-        </Box>
+        <>
+            <Box sx={{ width: 300, pb: 2, display: "flex" }}>
+                <Box sx={{ display: "flex", flexGrow: 1 }}>
+                    <Button variant="contained" color="secondary" startIcon={<ContentPasteSearchOutlinedIcon />} onClick={handleOnPreview}>
+                        preview
+                    </Button>
+                </Box>
+                <Box sx={{ display: "flex" }}>
+                    <Button variant="contained" color="primary" sx={{ ml: 1, pl: 1, pr: 1, minWidth: 4 }} onClick={handleOnGenerate}>
+                        <SaveAltOutlinedIcon />
+                    </Button>
+                    <Button variant="contained" color="primary" sx={{ ml: 1, pl: 1, pr: 1, minWidth: 4 }} onClick={handleOnSave}>
+                        <SaveOutlinedIcon />
+                    </Button>
+                </Box>
+            </Box>
+            <PreviewModal dataset={previewData} onClose={handleOnPreviewClose} />
+        </>
     );
 };
 

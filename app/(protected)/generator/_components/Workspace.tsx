@@ -21,6 +21,7 @@ import useIncomerOrder, { addOrder, changeOrder, deleteNodeOrder, deleteOrderFro
 import { createNodeInfo } from "../_utils/node";
 import WidgetsPanel from "./WidgetsPanel";
 import SettingPanel from "./SettingPanel";
+import PreviewModal from "./PreviewModal";
 
 const Container = styled(Box)(() => ({
     "&": {
@@ -123,31 +124,33 @@ const Workspace: FC<WorkspaceProps> = (props) => {
     }, [setSelectedNodeId]);
 
     return (
-        <Container ref={containerRef}>
-            <ReactFlow
-                defaultViewport={{ x: 300, y: 100, zoom: 1 }}
-                deleteKeyCode="Delete"
-                edges={edges}
-                multiSelectionKeyCode={null}
-                nodes={nodes}
-                nodeTypes={customNodeType}
-                selectionKeyCode={null}
-                onDragOver={handleOnWidgetDragOver}
-                onDrop={handleOnWidgetDrop}
-                onInit={setReactflowInstance}
-                onEdgesChange={onEdgeChange}
-                onNodesChange={onNodeChange}
-                onNodeClick={handleOnNodeClick}
-                onConnect={handleOnConnect}
-                onNodesDelete={handleOnNodesDelete}
-                onEdgesDelete={handleOnEdgesDelete}
-            >
-                <WidgetsPanel />
-                <SettingPanel selected={selectedNodeId} onClose={handleOnPanelClose} />
-                <Background variant={BackgroundVariant.Dots} />
-                <Controls />
-            </ReactFlow>
-        </Container>
+        <>
+            <Container ref={containerRef}>
+                <ReactFlow
+                    defaultViewport={{ x: 300, y: 100, zoom: 1 }}
+                    deleteKeyCode="Delete"
+                    edges={edges}
+                    multiSelectionKeyCode={null}
+                    nodes={nodes}
+                    nodeTypes={customNodeType}
+                    selectionKeyCode={null}
+                    onDragOver={handleOnWidgetDragOver}
+                    onDrop={handleOnWidgetDrop}
+                    onInit={setReactflowInstance}
+                    onEdgesChange={onEdgeChange}
+                    onNodesChange={onNodeChange}
+                    onNodeClick={handleOnNodeClick}
+                    onConnect={handleOnConnect}
+                    onNodesDelete={handleOnNodesDelete}
+                    onEdgesDelete={handleOnEdgesDelete}
+                >
+                    <WidgetsPanel />
+                    <SettingPanel selected={selectedNodeId} onClose={handleOnPanelClose} />
+                    <Background variant={BackgroundVariant.Dots} />
+                    <Controls />
+                </ReactFlow>
+            </Container>
+        </>
     );
 };
 
