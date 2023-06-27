@@ -1,5 +1,6 @@
 import { FC, useCallback } from "react";
 import { useEdges, useNodes } from "reactflow";
+import { useSnackbar } from "notistack";
 import { Box, Button } from "@mui/material";
 import { ResponseModel } from "@/types/api";
 import { useAxiosAuth } from "@/util/axios";
@@ -8,9 +9,13 @@ import useIncomerOrder from "../_hooks/useIncomerOrder";
 import useInfo from "../_hooks/useInfo";
 import { generate } from "../_utils/generator";
 import { updateFlowStore, useFlowStore } from "../_hooks/useFlowStore";
+import ContentPasteSearchOutlinedIcon from "@mui/icons-material/ContentPasteSearchOutlined";
+import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 const ControllerPanel: FC = () => {
     const axios = useAxiosAuth();
+    const { enqueueSnackbar } = useSnackbar();
 
     const nodes = useNodes();
     const edges = useEdges();
@@ -30,27 +35,27 @@ const ControllerPanel: FC = () => {
                 const { data: responseData } = await axios.post<ResponseModel<number>>("/v1/template", body);
                 const { status, data } = responseData;
                 flowStoreDispatch(updateFlowStore({ id: data }));
-                console.log("save new template", data);
+                enqueueSnackbar("Template has been saved", { variant: "success", autoHideDuration: 1500 });
             } else {
-                const { data: responseData } = await axios.patch(`/v1/template/${flowStore.id}`, body);
-                const { status } = responseData;
-                console.log("update template");
+                await axios.patch(`/v1/template/${flowStore.id}`, body);
+                enqueueSnackbar("Template has been updated", { variant: "success", autoHideDuration: 1500 });
             }
         } catch (error) {
             console.error(error);
+            enqueueSnackbar("Cannot save template", { variant: "error", autoHideDuration: 5000 });
         }
-    }, [axios, flowStore, info, nodes, edges, options, orders, flowStoreDispatch]);
+    }, [axios, flowStore, info, nodes, edges, options, orders, enqueueSnackbar, flowStoreDispatch]);
 
     return (
-        <Box sx={{ width: 300, pb: 2, display: "flex", justifyContent: "space-between" }}>
-            <Button variant="contained" color="secondary" onClick={handleOnPreview}>
-                Preview
+        <Box sx={{ width: 300, pb: 2, display: "flex", justifyContent: "flex-start" }}>
+            <Button variant="contained" color="secondary" startIcon={<ContentPasteSearchOutlinedIcon />} onClick={handleOnPreview}>
+                preview
             </Button>
-            <Button variant="contained" color="primary">
-                Generate
+            <Button variant="contained" color="primary" sx={{ ml: 1, pl: 1, pr: 1, minWidth: 4 }}>
+                <SaveAltOutlinedIcon />
             </Button>
-            <Button variant="contained" color="info" onClick={handleOnSave}>
-                Save
+            <Button variant="contained" color="info" onClick={handleOnSave} sx={{ ml: 1, pl: 1, pr: 1, minWidth: 4 }}>
+                <SaveOutlinedIcon />
             </Button>
         </Box>
     );

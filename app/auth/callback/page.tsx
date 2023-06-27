@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingPage from "@/components/LoadingPage";
 import useSession, { login } from "@/hooks/useSession";
 import { useAxios } from "@/util/axios";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -22,13 +23,7 @@ const CallbackPage: FC = () => {
         router.replace("/");
     };
 
-    return (
-        <>
-            code: {params.get("code")}
-            <br />
-            scope: {params.get("scope")}
-        </>
-    );
+    return <LoadingPage />;
 };
 
 export default CallbackPage;

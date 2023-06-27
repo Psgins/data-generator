@@ -5,8 +5,8 @@ import Skeleton from "@mui/material/Skeleton";
 
 const TemplateSkeleton: FC = () => {
     return (
-        <Container>
-            <Grid container spacing={2} sx={{ mt: 2 }}>
+        <Container sx={{ py: 4 }}>
+            <Grid container spacing={2}>
                 <Grid item xs={3}>
                     <Skeleton variant="rounded" height={150} />
                 </Grid>

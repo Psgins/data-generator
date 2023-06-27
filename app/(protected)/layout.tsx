@@ -2,7 +2,7 @@
 
 import { FC, PropsWithChildren } from "react";
 import useSession, { SessionStatus } from "@/hooks/useSession";
-import LoadingPage from "./_components/LoadingPage";
+import LoadingPage from "@/components/LoadingPage";
 
 const ProtectedLayout: FC<PropsWithChildren> = ({ children }) => {
     const [session] = useSession();
