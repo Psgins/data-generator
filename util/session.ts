@@ -1,31 +1,37 @@
-import { Session } from "@/hooks/useSession";
-import { browser } from "process";
+import { Session, SessionStatus } from "@/hooks/useSession";
 
-const REFRESH_TOKEN_KEY = "refresh_token";
-const ACCESS_TOKEN_KEY = "access_token";
+const AUTH_PROFILE = "AUTH_PROFILE";
+const REFRESH_TOKEN_KEY = "refreshToken";
+const ACCESS_TOKEN_KEY = "accessToken";
 
 const isBrowser = typeof document !== "undefined";
 
 export const loadSession = (): Partial<Session> | null => {
     if (isBrowser) {
-        const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-        const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-        return { refreshToken, accessToken };
+        const authProfile = localStorage.getItem(AUTH_PROFILE);
+        if (authProfile) {
+            return JSON.parse(authProfile);
+        }
     }
     return null;
 };
 
 export const saveSession = (session: Partial<Session>) => {
     if (isBrowser) {
-        if (session.refreshToken) {
-            localStorage.setItem(REFRESH_TOKEN_KEY, session.refreshToken);
-        } else {
-            localStorage.removeItem(REFRESH_TOKEN_KEY);
-        }
-        if (session.accessToken) {
-            localStorage.setItem(ACCESS_TOKEN_KEY, session.accessToken);
-        } else {
-            localStorage.removeItem(ACCESS_TOKEN_KEY);
+        const authSession = {
+            [REFRESH_TOKEN_KEY]: session.refreshToken,
+            [ACCESS_TOKEN_KEY]: session.accessToken,
+        };
+
+        switch (session.status) {
+            case SessionStatus.AUTHENTICATED:
+                localStorage.setItem(AUTH_PROFILE, JSON.stringify(authSession));
+                break;
+            case SessionStatus.UNAUTHENTICATED:
+                localStorage.removeItem(AUTH_PROFILE);
+                break;
+            default:
+                break;
         }
     }
 };

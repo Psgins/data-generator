@@ -80,14 +80,12 @@ export const SessionProvider: FC<PropsWithChildren> = ({ children }) => {
 
     useEffect(() => {
         const prevSession = loadSession();
-        const status = prevSession ? SessionStatus.AUTHENTICATED : SessionStatus.UNAUTHENTICATED;
+        const status = prevSession?.accessToken ? SessionStatus.AUTHENTICATED : SessionStatus.UNAUTHENTICATED;
         dispatch(updateSession({ ...prevSession, status }));
     }, [dispatch]);
 
     useEffect(() => {
-        if (session.status !== SessionStatus.UNKNOWN) {
-            saveSession(session);
-        }
+        saveSession(session);
     }, [session]);
 
     return (

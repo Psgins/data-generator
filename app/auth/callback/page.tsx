@@ -19,7 +19,12 @@ const CallbackPage: FC = () => {
     const getToken = async () => {
         const { data: responseData } = await axios.post("/v1/auth/token", { code: params.get("code") });
         const { id_token: access_token, refresh_token } = responseData;
-        sessionDispatch(login({ accessToken: access_token, refreshToken: refresh_token }));
+        sessionDispatch(
+            login({
+                accessToken: access_token,
+                refreshToken: refresh_token,
+            })
+        );
         router.replace("/");
     };
 
